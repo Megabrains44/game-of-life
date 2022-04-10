@@ -18,8 +18,16 @@ class Cell{
     }
     draw(){
         if (!this.alive) return;
-        c.fillStyle = "yellow";
+        // c.fillStyle = "yellow";
+        c.shadowBlur = 6;
+        c.shadowColor = "white";
+        c.shadowOffsetX = 0;
+        c.shadowOffsetY = 0;
+        c.fillStyle = "white";
         c.fillRect(this.x, this.y, this.width, this.width)
+        c.shadowBlur = 0;
+        c.shadowOffsetX = 0;
+        c.shadowOffsetY = 0;
     }
     kill(){
         this.alive = false;
