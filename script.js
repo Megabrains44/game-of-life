@@ -6,14 +6,14 @@ const canvas = q('#canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-
+const CELL_WIDTH = 20;
 const c = canvas.getContext("2d");
 
 class Cell{
     constructor(x,y, isAlive = true){
         this.x = x ; 
         this.y = y ;
-        this.width = 10;
+        this.width = CELL_WIDTH;
         this.alive = isAlive;
     }
     draw(){
@@ -79,8 +79,8 @@ function addText(text, font = 24, position){
 
 
 function addDeadCells(params) {
-    for (let i = 0; i < canvas.width; i+=10){
-        for (let j = 0; j < canvas.height; j+=10){
+    for (let i = 0; i < canvas.width; i+=CELL_WIDTH){
+        for (let j = 0; j < canvas.height; j+=CELL_WIDTH){
             boxes.push(
                 new Cell(i, j, false)
             )
@@ -89,16 +89,16 @@ function addDeadCells(params) {
 }
 
 function drawGrid() {
-    for (let i = 0; i < canvas.width; i+=10){
-        for (let j = 0; j < canvas.height; j+=10){
+    for (let i = 0; i < canvas.width; i+=CELL_WIDTH){
+        for (let j = 0; j < canvas.height; j+=CELL_WIDTH){
             c.beginPath();
             c.moveTo(i, j);
-            c.lineTo(i + 10, j);
+            c.lineTo(i + CELL_WIDTH, j);
             c.stroke();
 
             c.beginPath();
             c.moveTo(i, j);
-            c.lineTo(i, j+ 10);
+            c.lineTo(i, j+ CELL_WIDTH);
             c.stroke();
         }
     }
@@ -141,7 +141,7 @@ function animate(){
                     // {x: 0, y: 10}
                     // {x:0, y: 10} {x:0, y:10}
                     .filter(neighbor =>  !((box.x == neighbor.x) && (box.y == neighbor.y)))
-                    .filter(cell => (Math.abs(box.x - cell.x) <= 10) && (Math.abs(box.y - cell.y) <= 10));
+                    .filter(cell => (Math.abs(box.x - cell.x) <= CELL_WIDTH) && (Math.abs(box.y - cell.y) <= CELL_WIDTH));
                 
                 // if (box.alive) console.log(possibleNeighbors);
                 const liveNeighbors = possibleNeighbors.length;
@@ -194,14 +194,17 @@ q('.start-btn').addEventListener("click", () => {
  * @param {PointerEvent} e 
  */
 function click(e) {
-    const xPos = Math.floor(e.x  / 10) * 10;
-    const yPos = Math.floor(e.y  / 10) * 10;
+    const xPos = Math.floor(e.x  / CELL_WIDTH) * CELL_WIDTH;
+    const yPos = Math.floor(e.y  / CELL_WIDTH) * CELL_WIDTH;
 
     const newBoxes = [...boxes];
     
     const idx = newBoxes.findIndex(box => box.x === xPos && box.y == yPos);
+    if (newBoxes[idx].alive){
+        newBoxes[idx].kill()
+    }
     newBoxes[
-        newBoxes.findIndex(box => box.x === xPos && box.y == yPos)
+        idx
     ] = new Cell(xPos, yPos, true);
     boxes = newBoxes;
 
