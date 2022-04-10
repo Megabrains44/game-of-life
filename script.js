@@ -127,7 +127,7 @@ function animate(){
 
 
     if (hasGameStarted){
-        if (frames % 10 == 0){
+        if (frames % 4 == 0){
 
             let changedBoxes = [];
             
