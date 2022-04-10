@@ -217,7 +217,11 @@ window.addEventListener("resize", () => {
     canvas.height = window.innerHeight;
 })
 
-
+q('.clear-btn').addEventListener("click", () => {
+    hasGameStarted = false;
+    boxes = [];
+    addDeadCells();
+})
 
 addDeadCells();
 animate()
