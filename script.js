@@ -91,6 +91,7 @@ function addDeadCells(params) {
 function drawGrid() {
     for (let i = 0; i < canvas.width; i+=CELL_WIDTH){
         for (let j = 0; j < canvas.height; j+=CELL_WIDTH){
+            c.strokeStyle = "#c3c3c3";
             c.beginPath();
             c.moveTo(i, j);
             c.lineTo(i + CELL_WIDTH, j);
