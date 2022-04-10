@@ -201,11 +201,12 @@ function click(e) {
     
     const idx = newBoxes.findIndex(box => box.x === xPos && box.y == yPos);
     if (newBoxes[idx].alive){
-        newBoxes[idx].kill()
+        newBoxes[idx] = new Cell(xPos, yPos, false)
     }
-    newBoxes[
-        idx
-    ] = new Cell(xPos, yPos, true);
+    else {
+        newBoxes[idx] = new Cell(xPos, yPos, true);
+    }
+    
     boxes = newBoxes;
 
 }
